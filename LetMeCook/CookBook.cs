@@ -36,9 +36,9 @@ public class CookBook(CookBookDB cookBookDb)
 
                     break;
                 case "Edit Recipe":
-                    cookBookDb.ReplaceRecipe(editedRecipe);
                     var selectedRecipeToEdit = SelectRecipe("Edit");
                     var editedRecipe = EditRecipe(selectedRecipeToEdit);
+                    if (editedRecipe.IsEdited) cookBookDb.ReplaceRecipe(editedRecipe);
 
                     break;
                 case "Delete Recipe":
