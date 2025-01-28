@@ -131,9 +131,7 @@ public class CookBook(CookBookDB cookBookDb)
                                 new Layout("Misc")
                                     .Size(3),
                                 new Layout("Bottom")
-                                    .Size(3))),
-                new Layout("Footer")
-                    .Size(3));
+                                    .Size(3))));
 
         layout["Title"].Update(
             new Panel(
