@@ -82,6 +82,7 @@ public class CookBook(CookBookDB cookBookDb)
         var selectedMenuAction = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .PageSize(10)
+                .Title("What would you like to do?\n[italic gray](Use arrow keys and enter)[/]")
                 .MoreChoicesText("[grey](Move up and down to reveal more actions)[/]")
                 .AddChoices("View Recipes", "New Recipe", "Edit Recipe", "Delete Recipe", "Exit"));
 
@@ -97,7 +98,7 @@ public class CookBook(CookBookDB cookBookDb)
         layout["Title"].Update(
             new Panel(
                 Align.Center(
-                    new Markup($"[yellow bold]Select Recipe to [/]{actionText}"),
+                    new Markup($"[yellow bold]Main Menu > {actionText} Recipe[/]"),
                     VerticalAlignment.Top)));
 
         AnsiConsole.Write(layout);
@@ -107,6 +108,7 @@ public class CookBook(CookBookDB cookBookDb)
             new SelectionPrompt<string>()
                 .EnableSearch()
                 .PageSize(10)
+                .Title($"Select Recipe to {actionText}")
                 .MoreChoicesText("[grey](Move up and down to reveal more recipes)[/]")
                 .AddChoices(recipes.Select(r => r.Title).ToList()));
 
@@ -136,8 +138,7 @@ public class CookBook(CookBookDB cookBookDb)
         layout["Title"].Update(
             new Panel(
                     Align.Center(
-                        new Markup("Selected Recipe: " + selectedRecipe.Title,
-                            new Style(Color.Green, null, Decoration.Bold)),
+                        new Markup($"[yellow bold]Main Menu > {actionText} Recipe > Recipe:[/] [green bold]{selectedRecipe.Title}[/]"),
                         VerticalAlignment.Top))
                 .Expand());
 
@@ -185,20 +186,21 @@ public class CookBook(CookBookDB cookBookDb)
         
         var layout = new Layout("Title");
 
-        layout["Title"].Update(
-            new Panel(
-                Align.Center(
-                    new Markup($"Recipe Editor: select action for {selectedRecipe.Title}"),
-                    VerticalAlignment.Top)));
+            layout["Title"].Update(
+                new Panel(
+                    Align.Center(
+                        new Markup($"[yellow bold]Main Menu > Edit Recipe > Recipe:[/] [green bold]{selectedRecipe.Title}[/]"),
+                        VerticalAlignment.Top)));
 
         AnsiConsole.Render(layout);
 
-        Console.SetCursorPosition(0, 4);
-        var selectedEditorAction = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .PageSize(10)
-                .MoreChoicesText("[grey](Move up and down to reveal more actions)[/]")
-                .AddChoices("Edit Name", "Edit Instructions", "Edit Ingredients", "Edit Score", "Edit Creator", "Exit"));
+            Console.SetCursorPosition(0, 4);
+            var selectedEditorAction = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Move up and down to reveal more actions)[/]")
+                    .AddChoices("Edit Name", "Edit Instructions", "Edit Ingredients", "Edit Score", "Edit Creator",
+                        "Save and go back", "Cancel and go back"));
 
         switch (selectedEditorAction)
         {
@@ -253,7 +255,7 @@ public class CookBook(CookBookDB cookBookDb)
                 .AddChoice(false)
                 .DefaultValue(false)
                 .WithConverter(choice => choice ? "y" : "n"));
-        
+
         return confirmation;
     }
 }
