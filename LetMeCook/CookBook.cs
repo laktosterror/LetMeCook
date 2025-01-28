@@ -192,7 +192,7 @@ public class CookBook(CookBookDB cookBookDb)
                         new Markup($"[yellow bold]Main Menu > Edit Recipe > Recipe:[/] [green bold]{selectedRecipe.Title}[/]"),
                         VerticalAlignment.Top)));
 
-        AnsiConsole.Render(layout);
+            AnsiConsole.Write(layout);
 
             Console.SetCursorPosition(0, 4);
             var selectedEditorAction = AnsiConsole.Prompt(
