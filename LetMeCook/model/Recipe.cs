@@ -16,4 +16,6 @@ public class Recipe
     [BsonElement("score")] public double Score { get; set; }
 
     [BsonElement("createdBy")] public string CreatedBy { get; set; }
+
+    [BsonIgnore] public bool IsEdited { get; set; }
 }
