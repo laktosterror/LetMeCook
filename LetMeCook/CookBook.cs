@@ -204,21 +204,21 @@ public class CookBook(CookBookDB cookBookDb)
                     .AddChoices("Edit Name", "Edit Instructions", "Edit Ingredients", "Edit Score", "Edit Creator",
                         "Save and go back", "Cancel and go back"));
 
-        switch (selectedEditorAction)
-        {
-            case "Edit Name":
-                AnsiConsole.WriteLine($"Old name: {selectedRecipe.Title}");
-                var newName = AnsiConsole.Prompt(
-                    new TextPrompt<string>("Enter new name:"));
-                editedRecipe.Title = newName;
-                
-                break;
             case "Edit Instructions":
                 layout["Title"].Update(
                     new Panel(
                         Align.Center(
                             new Markup($"Recipe Editor: Update Instructions for {selectedRecipe.Title}"),
                             VerticalAlignment.Top)));
+            switch (selectedEditorAction)
+            {
+                case "Edit Name":
+                    AnsiConsole.WriteLine($"Old name: {selectedRecipe.Title}");
+                    var newName = AnsiConsole.Prompt(
+                        new TextPrompt<string>("New name:"));
+                    editedRecipe.Title = newName;
+
+                    break;
 
                     do
                     {
@@ -235,16 +235,107 @@ public class CookBook(CookBookDB cookBookDb)
                     new TextPrompt<string>("What's your name?"));
 
 
-                break;
-            case "Edit Ingredients":
-                break;
-            case "Edit Score":
-                break;
-            case "Edit Creator":
-                break;
-            default:
-                break;
-        }
+                    break;
+                case "Edit Ingredients":
+                    var continueEditIngredients = true;
+
+                    do
+                    {
+                        var selectedIngredientEditType = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .PageSize(10)
+                                .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                .AddChoices("Add ingredient", "Edit ingredients", "Delete ingredient", "Go back"));
+
+                        switch (selectedIngredientEditType)
+                        {
+                            case "Add ingredient":
+                                var mewIngredient = AnsiConsole.Prompt(
+                                    new TextPrompt<string>("Enter new ingredient:"));
+                                editedRecipe.Ingredients.Add(mewIngredient);
+
+                                break;
+                            case "Edit ingredients":
+                                if (selectedRecipe.Ingredients.Count > 0)
+                                {
+                                    AnsiConsole.WriteLine("Select ingredient you want to edit.");
+                                    var selectedIngredient = AnsiConsole.Prompt(
+                                        new SelectionPrompt<string>()
+                                            .PageSize(10)
+                                            .EnableSearch()
+                                            .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                            .AddChoices(selectedRecipe.Ingredients));
+
+                                    AnsiConsole.WriteLine($"Old Ingredient: {selectedIngredient}");
+                                    var editedIngredient = AnsiConsole.Prompt(
+                                        new TextPrompt<string>("Enter new instruction:"));
+                                    var indexOfOldIngredient =
+                                        editedRecipe.Ingredients.FindIndex(i => i == selectedIngredient);
+                                    editedRecipe.Ingredients[indexOfOldIngredient] = editedIngredient;
+                                }
+                                else
+                                {
+                                    AnsiConsole.WriteLine("No ingredients found. Create one!");
+                                    AnsiConsole.WriteLine("Press any key to go back!");
+                                    Console.ReadKey();
+                                }
+
+                                break;
+                            case "Delete ingredient":
+                                if (selectedRecipe.Ingredients.Count > 0)
+                                {
+                                    AnsiConsole.WriteLine("Select ingredients you want to delete.");
+
+                                    var selectedIngredientToDelete = AnsiConsole.Prompt(
+                                        new SelectionPrompt<string>()
+                                            .PageSize(10)
+                                            .EnableSearch()
+                                            .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                            .AddChoices(selectedRecipe.Ingredients));
+
+                                    editedRecipe.Ingredients.Remove(selectedIngredientToDelete);
+                                }
+                                else
+                                {
+                                    AnsiConsole.WriteLine("No ingredients found. Create one!");
+                                    AnsiConsole.WriteLine("Press any key to go back!");
+                                    Console.ReadKey();
+                                }
+
+                                break;
+                            default:
+                                continueEditIngredients = false;
+                                break;
+                        }
+                    } while (continueEditIngredients);
+
+                    break;
+                case "Edit Score":
+                    AnsiConsole.WriteLine("Enter new score for recipe, 0.0 - 5.0");
+                    AnsiConsole.WriteLine($"Old score: {editedRecipe.Score}");
+                    var newScore = AnsiConsole.Prompt(
+                        new TextPrompt<double>("New score:"));
+                    if (newScore < 0) newScore = 0;
+                    if (newScore > 5) newScore = 5;
+                    editedRecipe.Score = newScore;
+
+                    break;
+                case "Edit Creator":
+                    AnsiConsole.WriteLine("Enter new creator name.");
+                    AnsiConsole.WriteLine($"Old creator: {editedRecipe.CreatedBy}");
+                    var newCreator = AnsiConsole.Prompt(
+                        new TextPrompt<string>("New creator:"));
+                    editedRecipe.CreatedBy = newCreator;
+
+                    break;
+                case "Save and go back":
+                    editedRecipe.IsEdited = true;
+                    continueEditRecipe = false;
+                    break;
+                default:
+                    continueEditRecipe = false;
+                    break;
+            }
         } while (continueEditRecipe);
 
         return editedRecipe;
