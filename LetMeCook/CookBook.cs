@@ -15,8 +15,17 @@ public class CookBook(CookBookDB cookBookDb)
             switch (selectedMenuAction)
             {
                 case "View Recipes":
-                    var selectedRecipeToView = RecipeSelector("View");
-                    ShowSelectedRecipe(selectedRecipeToView);
+                    if (cookBookDb.CountRecipes() > 0)
+                    {
+                        var selectedRecipeToView = SelectRecipe("View");
+                        ShowRecipe(selectedRecipeToView, "View");
+                    }
+                    else
+                    {
+                        AnsiConsole.WriteLine("No recipes found. Create one!");
+                    }
+                    
+                    AnsiConsole.Write("Press any key to go back!");
                     Console.ReadKey();
 
                     break;
