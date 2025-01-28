@@ -10,19 +10,7 @@ internal class Program
     {
         _cookBookDb = new CookBookDB();
         var cookBook = new CookBook(_cookBookDb);
-
-        var layout = new Layout("Title")
-            .Size(3);
-
-        layout["Title"].Update(
-            new Panel(
-                Align.Center(
-                    new Markup("Starting Up!", new Style(Color.Yellow, null, Decoration.Bold)),
-                    VerticalAlignment.Top)));
-
-        AnsiConsole.Clear();
-        AnsiConsole.Render(layout);
-        Console.SetCursorPosition(0, 3);
+        var createMockData = false;
 
         AnsiConsole.Status()
             .Start("Connecting To Database...", ctx =>
@@ -43,7 +31,7 @@ internal class Program
                 if (!_cookBookDb.IsDatabaseExist())
                 {
                     AnsiConsole.MarkupLine("[red bold]Error: Could not find cookbook database![/]");
-                    throw new Exception("Could not find cookbook database!");
+                    createMockData = true;
                 }
 
                 Thread.Sleep(1000);
@@ -52,12 +40,19 @@ internal class Program
                 if (!_cookBookDb.IsCollectionExist())
                 {
                     AnsiConsole.MarkupLine("[red bold]Error: Could not find recipes collection![/]");
-                    throw new Exception("Could not find recipes collection!");
+                    createMockData = true;
                 }
 
                 Thread.Sleep(1000);
 
-                ctx.Status("Connected!");
+                if (createMockData)
+                {
+                    AnsiConsole.MarkupLine("[green bold]Will create database, collection and mock recipes![/]");
+                    Thread.Sleep(1000);
+                    _cookBookDb.CreateMockRecipes();
+                }
+
+
                 ctx.Spinner(Spinner.Known.Earth);
                 ctx.SpinnerStyle(Style.Parse("green"));
                 Thread.Sleep(1000);
