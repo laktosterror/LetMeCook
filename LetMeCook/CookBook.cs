@@ -58,7 +58,7 @@ public class CookBook(CookBookDB cookBookDb)
 
                     break;
                 default:
-                    WantToExit = true;
+                    _continueMenu = false;
                     break;
             }
         } while (_continueMenu);
