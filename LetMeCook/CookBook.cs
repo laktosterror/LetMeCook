@@ -73,7 +73,7 @@ public class CookBook(CookBookDB cookBookDb)
         layout["Title"].Update(
             new Panel(
                 Align.Center(
-                    new Markup("Welcome, select action", new Style(Color.Yellow, null, Decoration.Bold)),
+                    new Markup("[bold yellow]Main Menu[/]"),
                     VerticalAlignment.Top)));
 
         AnsiConsole.Render(layout);
@@ -252,16 +252,6 @@ public class CookBook(CookBookDB cookBookDb)
         }
 
         return editedRecipe;
-    }
-    
-    private string ActionSelector(List<string> choises, string defaultChoise)
-    {
-        var selectedAction = AnsiConsole.Prompt(
-            new TextPrompt<string>("Select Action")
-                .AddChoices(choises)
-                .DefaultValue(defaultChoise));
-
-        return selectedAction;
     }
 
     private bool ConfirmAction(string confirmationText)
