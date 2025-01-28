@@ -213,21 +213,83 @@ public class CookBook(CookBookDB cookBookDb)
                     editedRecipe.Title = newName;
 
                     break;
+                case "Edit Instructions":
+                    var continueEditInstructions = true;
 
                     do
                     {
                         AnsiConsole.Write(layout);
 
-                Console.SetCursorPosition(0, 4);
-                var selectedInstructionStep = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .PageSize(10)
-                        .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
-                        .AddChoices(selectedRecipe.Instructions));
-                
-                var name = AnsiConsole.Prompt(
-                    new TextPrompt<string>("What's your name?"));
+                        Console.SetCursorPosition(0, 4);
+                        var selectedInstructionEditType = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .PageSize(10)
+                                .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                .AddChoices("Add step", "Edit steps", "Delete step", "Go back"));
 
+                        switch (selectedInstructionEditType)
+                        {
+                            case "Add step":
+                                AnsiConsole.WriteLine($"Previous step: {editedRecipe.Instructions.LastOrDefault()}");
+                                var newInstructionStep = AnsiConsole.Prompt(
+                                    new TextPrompt<string>("Enter new instruction:"));
+                                editedRecipe.Instructions.Add(newInstructionStep);
+
+                                break;
+                            case "Edit steps":
+                                if (selectedRecipe.Instructions.Count > 0)
+                                {
+                                    AnsiConsole.WriteLine("Select instruction you want to edit.");
+
+                                    var selectedInstructionStep = AnsiConsole.Prompt(
+                                        new SelectionPrompt<string>()
+                                            .PageSize(10)
+                                            .EnableSearch()
+                                            .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                            .AddChoices(selectedRecipe.Instructions));
+
+                                    AnsiConsole.WriteLine($"Old instruction: {selectedInstructionStep}");
+                                    var editedInstructionStep = AnsiConsole.Prompt(
+                                        new TextPrompt<string>("Enter new instruction:"));
+                                    var indexOfOldInstructionStep =
+                                        editedRecipe.Instructions.FindIndex(i => i == selectedInstructionStep);
+                                    editedRecipe.Instructions[indexOfOldInstructionStep] = editedInstructionStep;
+                                }
+                                else
+                                {
+                                    AnsiConsole.WriteLine("No instructions found. Create one!");
+                                    AnsiConsole.WriteLine("Press any key to go back!");
+                                    Console.ReadKey();
+                                }
+
+                                break;
+                            case "Delete step":
+                                if (selectedRecipe.Instructions.Count > 0)
+                                {
+                                    AnsiConsole.WriteLine("Select instruction you want to delete.");
+
+                                    var selectedInstructionStepToDelete = AnsiConsole.Prompt(
+                                        new SelectionPrompt<string>()
+                                            .PageSize(10)
+                                            .EnableSearch()
+                                            .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
+                                            .AddChoices(selectedRecipe.Instructions));
+
+                                    editedRecipe.Instructions.Remove(selectedInstructionStepToDelete);
+                                }
+                                else
+                                {
+                                    AnsiConsole.WriteLine("No instructions found. Create one!");
+                                    AnsiConsole.WriteLine("Press any key to go back!");
+                                    Console.ReadKey();
+                                }
+
+                                break;
+                            default:
+                                continueEditInstructions = false;
+                                break;
+                        }
+                    } while (continueEditInstructions);
 
                     break;
                 case "Edit Ingredients":
