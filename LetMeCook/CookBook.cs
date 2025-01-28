@@ -21,6 +21,19 @@ public class CookBook(CookBookDB cookBookDb)
 
                     break;
                 case "New Recipe":
+                    var recipeTemplate = new Recipe
+                    {
+                        Title = "New Recipe",
+                        Ingredients = new List<string>(),
+                        Instructions = new List<string>(),
+                        Score = 0,
+                        CreatedBy = "Chef X",
+                        IsEdited = false
+                    };
+                    var newRecipe = EditRecipe(recipeTemplate);
+                    if (newRecipe.IsEdited) cookBookDb.CreateRecipe(newRecipe);
+
+
                     break;
                 case "Edit Recipe":
                     var selectedRecipeToEdit = RecipeSelector("Edit");
