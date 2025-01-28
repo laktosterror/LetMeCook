@@ -66,7 +66,7 @@ public class CookBook(CookBookDB cookBookDb)
         AnsiConsole.Clear();
     }
 
-    private string MenuSelector()
+    private string SelectMenuItem()
     {
         var layout = new Layout("Title");
 
@@ -88,7 +88,7 @@ public class CookBook(CookBookDB cookBookDb)
         return selectedMenuAction;
     }
 
-    private Recipe RecipeSelector(string actionText)
+    private Recipe SelectRecipe(string actionText)
     {
         var recipes = cookBookDb.GetAllRecipes();
 
@@ -115,7 +115,7 @@ public class CookBook(CookBookDB cookBookDb)
         return selectedRecipe;
     }
 
-    private void ShowSelectedRecipe(Recipe selectedRecipe)
+    private void ShowRecipe(Recipe selectedRecipe, string actionText)
     {
         var layout = new Layout("Root")
             .SplitRows(
@@ -189,7 +189,7 @@ public class CookBook(CookBookDB cookBookDb)
         AnsiConsole.Write(layout);
     }
 
-    private Recipe RecipeEditor(Recipe selectedRecipe)
+    private Recipe EditRecipe(Recipe selectedRecipe)
     {
         var editedRecipe = selectedRecipe;
         
@@ -264,7 +264,7 @@ public class CookBook(CookBookDB cookBookDb)
         return selectedAction;
     }
 
-    private bool ActionConfirmator(string confirmationText)
+    private bool ConfirmAction(string confirmationText)
     {
         var confirmation = AnsiConsole.Prompt(
             new TextPrompt<bool>(confirmationText)
