@@ -17,6 +17,11 @@ public class CookBookDB
         _recipesCollection = _database.GetCollection<Recipe>("recipes");
     }
 
+    public void CreateRecipe(Recipe recipe)
+    {
+        _recipesCollection.InsertOne(recipe);
+    }
+
     public List<Recipe> GetAllRecipes()
     {
         var recipes = _recipesCollection.Find(Builders<Recipe>.Filter.Empty).ToList();
