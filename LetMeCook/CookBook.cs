@@ -174,15 +174,6 @@ public class CookBook(CookBookDB cookBookDb)
                 .Header("Created By")
                 .Expand());
 
-        layout["Footer"].Update(
-            new Panel(
-                    Align.Left(
-                        new Grid()
-                            .AddColumns(4)
-                            .AddRow("E - Edit Recipe", "D - Delete Recipe", "R - Rate Recipe", "B - Go Back")))
-                .Header("Actions")
-                .Expand());
-
         AnsiConsole.Clear();
         AnsiConsole.Write(layout);
     }
