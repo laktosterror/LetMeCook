@@ -11,7 +11,7 @@ public class CookBook(CookBookDB cookBookDb)
     {
         do
         {
-            var selectedMenuAction = MenuSelector();
+            var selectedMenuAction = SelectMenuItem();
             switch (selectedMenuAction)
             {
                 case "View Recipes":
