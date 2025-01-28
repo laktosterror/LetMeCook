@@ -182,9 +182,11 @@ public class CookBook(CookBookDB cookBookDb)
     private Recipe EditRecipe(Recipe selectedRecipe)
     {
         var editedRecipe = selectedRecipe;
-        
-        
-        var layout = new Layout("Title");
+        var continueEditRecipe = true;
+
+        do
+        {
+            var layout = new Layout("Title");
 
             layout["Title"].Update(
                 new Panel(
@@ -243,6 +245,7 @@ public class CookBook(CookBookDB cookBookDb)
             default:
                 break;
         }
+        } while (continueEditRecipe);
 
         return editedRecipe;
     }
