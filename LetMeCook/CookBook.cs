@@ -51,14 +51,11 @@ public class CookBook(CookBookDB cookBookDb)
 
                     break;
                 case "Delete Recipe":
-                    var selectedRecipeToDelete = RecipeSelector("Delete");
-                    ShowSelectedRecipe(selectedRecipeToDelete);
-                    var selectedAction = ActionConfirmator("Delete this recipe?");
-                    if (selectedAction)
-                    {
-                        cookBookDb.DeleteRecipe(selectedRecipeToDelete);
-                    }
-                    
+                    var selectedRecipeToDelete = SelectRecipe("Delete");
+                    ShowRecipe(selectedRecipeToDelete, "Delete");
+                    var selectedActionConfirmed = ConfirmAction("Delete this recipe?");
+                    if (selectedActionConfirmed) cookBookDb.DeleteRecipe(selectedRecipeToDelete);
+
                     break;
                 default:
                     WantToExit = true;
