@@ -36,12 +36,10 @@ public class CookBook(CookBookDB cookBookDb)
 
                     break;
                 case "Edit Recipe":
-                    var selectedRecipeToEdit = RecipeSelector("Edit");
-                    var editedRecipe = RecipeEditor(selectedRecipeToEdit);
                     cookBookDb.ReplaceRecipe(editedRecipe);
-                    
-                    break;
-                case "Rate Recipe":
+                    var selectedRecipeToEdit = SelectRecipe("Edit");
+                    var editedRecipe = EditRecipe(selectedRecipeToEdit);
+
                     break;
                 case "Delete Recipe":
                     var selectedRecipeToDelete = RecipeSelector("Delete");
