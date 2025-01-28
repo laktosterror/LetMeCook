@@ -83,7 +83,7 @@ public class CookBook(CookBookDB cookBookDb)
             new SelectionPrompt<string>()
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to reveal more actions)[/]")
-                .AddChoices("View Recipes", "New Recipe", "Edit Recipe", "Rate Recipe", "Delete Recipe", "Exit"));
+                .AddChoices("View Recipes", "New Recipe", "Edit Recipe", "Delete Recipe", "Exit"));
 
         return selectedMenuAction;
     }
@@ -227,6 +227,8 @@ public class CookBook(CookBookDB cookBookDb)
                             new Markup($"Recipe Editor: Update Instructions for {selectedRecipe.Title}"),
                             VerticalAlignment.Top)));
 
+                    do
+                    {
                         AnsiConsole.Write(layout);
 
                 Console.SetCursorPosition(0, 4);
