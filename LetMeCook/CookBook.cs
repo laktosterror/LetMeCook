@@ -204,12 +204,6 @@ public class CookBook(CookBookDB cookBookDb)
                     .AddChoices("Edit Name", "Edit Instructions", "Edit Ingredients", "Edit Score", "Edit Creator",
                         "Save and go back", "Cancel and go back"));
 
-            case "Edit Instructions":
-                layout["Title"].Update(
-                    new Panel(
-                        Align.Center(
-                            new Markup($"Recipe Editor: Update Instructions for {selectedRecipe.Title}"),
-                            VerticalAlignment.Top)));
             switch (selectedEditorAction)
             {
                 case "Edit Name":
