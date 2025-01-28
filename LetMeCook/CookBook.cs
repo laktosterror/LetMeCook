@@ -76,7 +76,7 @@ public class CookBook(CookBookDB cookBookDb)
                     new Markup("[bold yellow]Main Menu[/]"),
                     VerticalAlignment.Top)));
 
-        AnsiConsole.Render(layout);
+        AnsiConsole.Write(layout);
 
         Console.SetCursorPosition(0, 4);
         var selectedMenuAction = AnsiConsole.Prompt(
@@ -100,7 +100,7 @@ public class CookBook(CookBookDB cookBookDb)
                     new Markup($"[yellow bold]Select Recipe to [/]{actionText}"),
                     VerticalAlignment.Top)));
 
-        AnsiConsole.Render(layout);
+        AnsiConsole.Write(layout);
 
         Console.SetCursorPosition(0, 4);
         var selectedRecipeTitle = AnsiConsole.Prompt(
@@ -227,7 +227,7 @@ public class CookBook(CookBookDB cookBookDb)
                             new Markup($"Recipe Editor: Update Instructions for {selectedRecipe.Title}"),
                             VerticalAlignment.Top)));
 
-                AnsiConsole.Render(layout);
+                        AnsiConsole.Write(layout);
 
                 Console.SetCursorPosition(0, 4);
                 var selectedInstructionStep = AnsiConsole.Prompt(
