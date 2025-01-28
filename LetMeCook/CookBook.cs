@@ -5,12 +5,7 @@ namespace LetMeCook;
 
 public class CookBook(CookBookDB cookBookDb)
 {
-    private bool WantToExit;
-
-    public void ShowLoginScreen()
-    {
-        //TODO: 
-    }
+    private bool _continueMenu = true;
 
     public void ShowStartMenu()
     {
@@ -49,7 +44,7 @@ public class CookBook(CookBookDB cookBookDb)
                     WantToExit = true;
                     break;
             }
-        } while (!WantToExit);
+        } while (_continueMenu);
 
         AnsiConsole.Clear();
     }
