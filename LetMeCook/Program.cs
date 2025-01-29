@@ -47,15 +47,10 @@ internal class Program
 
                 if (createMockData)
                 {
-                    AnsiConsole.MarkupLine("[green bold]Will create database, collection and mock recipes![/]");
+                    ctx.Status("Creating database, collection and mock recipes!");
                     Thread.Sleep(1000);
                     _cookBookDb.CreateMockRecipes();
                 }
-
-
-                ctx.Spinner(Spinner.Known.Earth);
-                ctx.SpinnerStyle(Style.Parse("green"));
-                Thread.Sleep(1000);
             });
 
         AnsiConsole.Clear();
