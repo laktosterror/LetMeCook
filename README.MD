@@ -1,1 +1,1 @@
-![preview](https://github.com/laktosterror/LetMeCook/blob/master/demo/video-demo.mp4)
+![preview](https://github.com/laktosterror/LetMeCook/blob/master/demo/video-demo.gif)
