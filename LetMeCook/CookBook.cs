@@ -239,12 +239,11 @@ public class CookBook(CookBookDB cookBookDb)
                             case "Edit steps":
                                 if (selectedRecipe.Instructions.Count > 0)
                                 {
-                                    AnsiConsole.WriteLine("Select instruction you want to edit.");
-
                                     var selectedInstructionStep = AnsiConsole.Prompt(
                                         new SelectionPrompt<string>()
                                             .PageSize(10)
                                             .EnableSearch()
+                                            .Title("Select instruction you want to edit.")
                                             .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
                                             .AddChoices(selectedRecipe.Instructions));
 
@@ -266,12 +265,11 @@ public class CookBook(CookBookDB cookBookDb)
                             case "Delete step":
                                 if (selectedRecipe.Instructions.Count > 0)
                                 {
-                                    AnsiConsole.WriteLine("Select instruction you want to delete.");
-
                                     var selectedInstructionStepToDelete = AnsiConsole.Prompt(
                                         new SelectionPrompt<string>()
                                             .PageSize(10)
                                             .EnableSearch()
+                                            .Title("Select instruction you want to delete.")
                                             .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
                                             .AddChoices(selectedRecipe.Instructions));
 
@@ -314,11 +312,11 @@ public class CookBook(CookBookDB cookBookDb)
                             case "Edit ingredients":
                                 if (selectedRecipe.Ingredients.Count > 0)
                                 {
-                                    AnsiConsole.WriteLine("Select ingredient you want to edit.");
                                     var selectedIngredient = AnsiConsole.Prompt(
                                         new SelectionPrompt<string>()
                                             .PageSize(10)
                                             .EnableSearch()
+                                            .Title("Select ingredient you want to edit.")
                                             .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
                                             .AddChoices(selectedRecipe.Ingredients));
 
@@ -340,12 +338,11 @@ public class CookBook(CookBookDB cookBookDb)
                             case "Delete ingredient":
                                 if (selectedRecipe.Ingredients.Count > 0)
                                 {
-                                    AnsiConsole.WriteLine("Select ingredients you want to delete.");
-
                                     var selectedIngredientToDelete = AnsiConsole.Prompt(
                                         new SelectionPrompt<string>()
                                             .PageSize(10)
                                             .EnableSearch()
+                                            .Title("Select ingredients you want to delete.")
                                             .MoreChoicesText("[grey](Move up and down to reveal more steps)[/]")
                                             .AddChoices(selectedRecipe.Ingredients));
 
